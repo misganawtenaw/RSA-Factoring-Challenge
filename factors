@@ -1,25 +1,30 @@
 #!/usr/bin/python3
-""" My module for testing numbers and finding the factorization """
-import math
+
+"""This module factorizes as many numbers as possible
+   into a product of two smaller numbers."""
+
 from sys import argv
 
 
-def factor(number, test_num):
-    """ Finds the values to return once a number has been found
-    """
+def read_file(filename):
+    """Read number from a file and turn it into a list of numbers."""
+    with open(filename, encoding="utf-8") as file:
+        lines = file.readlines()
+    number_list = []
+    for line in lines:
+        number_list.append(int(line))
+    return number_list
 
 
-    print("{}={}*{}".format(number, (number // test_num), test_num))
-
-
-with open(argv[1], mode="r", encoding="UTF-8") as f:
-    for line in f:
-        number = int(line)
-        if number % 2 == 0:
-            factor(number, 2)
-        else:
-            max_number_to_test = math.floor(math.sqrt(number))
-            for test_num in range(3, max_number_to_test + 1, 2):
-                if number % test_num == 0:
-                    factor(number, test_num)
+def factorize():
+    """factorize the given number into a product of two smaller numbers."""
+    for i in range(1, len(argv)):
+        ls = read_file(argv[i])
+        for n in ls:
+            for i in range(2, n):
+                if n == ((n // i) * i):
+                    print("{}={}*{}".format(n, (n // i), i))
                     break
+
+
+factorize()
